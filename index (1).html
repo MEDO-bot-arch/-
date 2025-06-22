@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متجر عسل الوليد</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      direction: rtl;
+      margin: 0;
+      background: linear-gradient(to bottom, #fff8e1, #fff);
+      color: #333;
+    }
+    header {
+      background: linear-gradient(135deg, #f7b731, #f1c40f);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      border-bottom-left-radius: 40px;
+      border-bottom-right-radius: 40px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #fff;
+      padding: 15px 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a {
+      margin: 0 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #f1c40f;
+    }
+    .container {
+      padding: 50px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+    .product {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .product:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+    }
+    .product img {
+      width: 100%;
+      display: block;
+    }
+    .product h3 {
+      margin: 15px;
+      color: #f1c40f;
+    }
+    .product p {
+      margin: 0 15px 15px;
+      font-size: 16px;
+    }
+    .btn {
+      display: block;
+      margin: 0 15px 20px;
+      background-color: #f1c40f;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background-color: #d4ac0d;
+    }
+    form input, form textarea, form select {
+      width: 100%;
+      padding: 14px;
+      margin-top: 10px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      font-size: 16px;
+    }
+    form button {
+      background: #f1c40f;
+      color: white;
+      font-size: 18px;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+    form button:hover {
+      background: #d4ac0d;
+    }
+    footer {
+      text-align: center;
+      padding: 30px;
+      background-color: #f7b731;
+      color: white;
+      margin-top: 60px;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+    }
+    #order {
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>متجر ميدو للعسل</h1>
+    <p>أجود أنواع العسل البلدي 100% - توصيل لجميع المحافظات</p>
+  </header>
+  <nav>
+    <a href="#products">المنتجات</a>
+    <a href="#order">طلب الآن</a>
+    <a href="#contact">تواصل معنا</a>
+  </nav>
+  <div class="container" id="products">
+    <h2>منتجاتنا</h2>
+    <div class="products">
+      <div class="product">
+        <img src="https://via.placeholder.com/400x250.png?text=عسل+سدر" alt="عسل سدر">
+        <h3>عسل سدر بلدي</h3>
+        <p>500 جم - 150 جنيه</p>
+        <a href="#order" class="btn" onclick="showOrderForm('عسل سدر بلدي')">اطلب الآن</a>
+      </div>
+      <div class="product">
+        <img src="https://via.placeholder.com/400x250.png?text=عسل+حبة+البركة" alt="عسل حبة البركة">
+        <h3>عسل حبة البركة</h3>
+        <p>500 جم - 130 جنيه</p>
+        <a href="#order" class="btn" onclick="showOrderForm('عسل حبة البركة')">اطلب الآن</a>
+      </div>
+    </div>
+  </div>
+  <div class="container" id="order" style="display:none;">
+    <h2>طلب المنتج</h2>
+    <div id="confirmationMessage" style="margin-bottom: 20px; display: none; color: green; font-weight: bold;"></div>
+      <form id="orderForm" onsubmit="submitOrder(event)">
+      <label>المنتج:</label>
+      <input type="text" id="product" name="product" readonly required>
+      <label>الاسم:</label>
+      <input type="text" name="name" required>
+      <label>رقم الهاتف:</label>
+      <input type="tel" name="phone" required>
+      <label>العنوان:</label>
+      <textarea name="address" rows="3" required></textarea>
+      <label>طريقة الدفع:</label>
+<select name="payment" required>
+  <option value="cash">الدفع عند الاستلام</option>
+  <option value="visa">بطاقة فيزا / ميزة</option>
+</select>
+      <div style="margin-top: 20px;"></div>
+      <a id="payLink" href="https://paymob.xyz/tvN9CLcm/" class="btn" target="_blank" style="display:none;">ادفع أونلاين</a>
+      <button type="submit">إرسال الطلب</button>
+    </form>
+  </div>
+  <div class="container" id="contact">
+    <h2>تواصل معنا</h2>
+    <p>لطلب العسل أو أي استفسار، راسلنا على واتساب:</p>
+    <p><a href="https://wa.me/201234567890" target="_blank" style="color:#f1c40f; font-weight:bold;">اضغط هنا للتواصل</a></p>
+  </div>
+  <footer>
+    &copy; 2025 متجر ميدو للعسل - جميع الحقوق محفوظة.
+  </footer>
+  <script>
+    function showOrderForm(productName) {
+      const orderSection = document.getElementById('order');
+      const productInput = document.getElementById('product');
+      const payLink = document.getElementById('payLink');
+
+      if (productInput && payLink) {
+        productInput.value = productName;
+        orderSection.style.display = 'block';
+        orderSection.scrollIntoView({ behavior: 'smooth' });
+
+        // تحديد الرابط حسب المنتج
+        if (productName === 'عسل سدر بلدي') {
+          payLink.href = 'https://paymob.xyz/tvN9CLcm/';
+        } else if (productName === 'عسل حبة البركة') {
+          payLink.href = 'https://paymob.xyz/ZNp6Lvts/'; // استبدله بالرابط المناسب
+        } else {
+          payLink.href = '#';
+        }
+      }
+    }
+
+    function submitOrder(e) {
+      e.preventDefault();
+      const form = e.target;
+      const product = form.product.value.trim();
+      const name = form.name.value.trim();
+      const phone = form.phone.value.trim();
+      const address = form.address.value.trim();
+      const payment = form.payment.value;
+
+      if (!product || !name || !phone || !address || !payment) {
+        alert("❌ من فضلك املأ جميع الحقول قبل إرسال الطلب.");
+        return;
+      }
+      const msg = `طلب جديد من متجر العسل:\n\n✅ المنتج: ${product}\n👤 الاسم: ${name}\n📞 الهاتف: ${phone}\n📍 العنوان: ${address}\n💳 طريقة الدفع: ${payment}`;
+      // window.open(`https://wa.me/201234567890?text=${encodeURIComponent(msg)}`, "_blank");
+console.log("📥 تم استقبال أوردر جديد:", msg);
+      const confirmation = document.getElementById('confirmationMessage');
+      confirmation.textContent = '✅ لقد تم استلام طلبك بنجاح! سيتم التواصل معك خلال دقائق.';
+      confirmation.style.display = 'block';
+
+      setTimeout(() => {
+        confirmation.remove();
+        form.reset();
+      }, 2000);
+    }
+  document.querySelector('select[name="payment"]').addEventListener('change', function(e) {
+  const payLink = document.getElementById('payLink');
+  if (e.target.value === 'visa') {
+    payLink.style.display = 'block';
+  } else {
+    payLink.style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>
